@@ -3,9 +3,6 @@ import turtle
 screen = turtle.Screen()
 
 
-# UP = 180
-# DOWN = 0
-
 class Paddles(turtle.Turtle):
 
     def __init__(self, x_cord, y_cord):
@@ -19,13 +16,11 @@ class Paddles(turtle.Turtle):
         self.goto(self.x, self.y)
 
     def up(self):
-        # self.setheading(UP)
         self.y += 20
         self.goto(self.x, self.y)
         screen.update()
 
     def down(self):
-        # self.setheading(DOWN)
         self.y -= 20
         self.goto(self.x, self.y)
         screen.update()
