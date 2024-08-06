@@ -105,7 +105,7 @@ def start_game():
         if ball.ycor() > 260 or ball.ycor() < -260:
             ball.bounce(y=-1)
 
-        # Detect collision with r_paddle
+        # Detect collision with Paddles
         if ball.xcor() > 350 and ball.distance(r_paddles) < 50 or ball.xcor() < -350 and ball.distance(l_paddles) < 50:
             ball.bounce(x=-1)
 
