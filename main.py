@@ -32,10 +32,15 @@ def boundary():
 
 boundary()
 
+is_first_try = 0
+
 
 def btn_click(x, y):
+    global is_first_try
     if -100 <= x <= 100 and -25 <= y <= 25:
-        screen.clear()
+        is_first_try += 1
+        if is_first_try != 1:
+            screen.clear()
         button.clear()
         button.hideturtle()
         win.clear()
@@ -121,7 +126,7 @@ def start_game():
             scoreboard.r_score += 1
             scoreboard.update_score()
         # Check Winner
-        if scoreboard.l_score == 10 or scoreboard.r_score == 10:
+        if scoreboard.l_score == 1 or scoreboard.r_score == 1:
             screen.onkey(None, "Up")
             screen.onkey(None, "Down")
             screen.onkey(None, "w")
