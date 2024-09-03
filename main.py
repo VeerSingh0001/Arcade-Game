@@ -7,7 +7,7 @@ screen = turtle.Screen()
 
 
 def set_screen():
-    screen.setup(height=600, width=800)
+    screen.setup(height=630, width=820)
     screen.bgcolor("#1A3636")
     screen.title("The classic legend Pong Game")
     screen.listen()
@@ -23,9 +23,9 @@ def boundary():
     bud.hideturtle()
     bud.color("white")
     bud.penup()
-    bud.goto(280, 280)
+    bud.goto(280, 290)
     bud.pendown()
-    cords = [(-380, 280), (-380, -280), (380, -280), (380, 280), (-380, 280)]
+    cords = [(-380, 290), (-380, -290), (380, -290), (380, 290), (-380, 290)]
     for cor in cords:
         bud.goto(cor)
 
@@ -125,7 +125,7 @@ def start_game():
             screen.onkey(r_paddles.down, "Down")
 
         # Detect collision with wall
-        if ball.ycor() > 260 or ball.ycor() < -260:
+        if ball.ycor() > 275 or ball.ycor() < -275:
             ball.bounce(y=-1)
 
         # Detect collision with Paddles
