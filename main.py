@@ -106,6 +106,24 @@ def start_game():
         screen.update()
         ball.move()
 
+        # Detect paddles collisions
+        if l_paddles.ycor() > 220:
+            screen.onkey(None, "w")
+        else:
+            screen.onkey(l_paddles.up, "w")
+        if l_paddles.ycor() < -220:
+            screen.onkey(None, "s")
+        else:
+            screen.onkey(l_paddles.down, "s")
+        if r_paddles.ycor() > 220:
+            screen.onkey(None, "Up")
+        else:
+            screen.onkey(r_paddles.up, "Up")
+        if r_paddles.ycor() < -220:
+            screen.onkey(None, "Down")
+        else:
+            screen.onkey(r_paddles.down, "Down")
+
         # Detect collision with wall
         if ball.ycor() > 260 or ball.ycor() < -260:
             ball.bounce(y=-1)
@@ -126,7 +144,7 @@ def start_game():
             scoreboard.r_score += 1
             scoreboard.update_score()
         # Check Winner
-        if scoreboard.l_score == 1 or scoreboard.r_score == 1:
+        if scoreboard.l_score == 10 or scoreboard.r_score == 10:
             screen.onkey(None, "Up")
             screen.onkey(None, "Down")
             screen.onkey(None, "w")
