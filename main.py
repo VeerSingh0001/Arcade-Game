@@ -41,9 +41,9 @@ def player_names():
     name.hideturtle()
     name.color("white")
     name.goto(-300, 290)
-    name.write(left_user,align="left", font=("Courier", 25, "bold"))
+    name.write(left_user, align="left", font=("Courier", 25, "bold"))
     name.goto(100, 290)
-    name.write(right_user,align="left", font=("Courier", 25, "bold"))
+    name.write(right_user, align="left", font=("Courier", 25, "bold"))
 
 
 is_first_try = 0
