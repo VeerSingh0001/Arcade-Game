@@ -7,7 +7,7 @@ screen = turtle.Screen()
 
 
 def set_screen():
-    screen.setup(height=630, width=820)
+    screen.setup(height=730, width=820)
     screen.bgcolor("#1A3636")
     screen.title("The classic legend Pong Game")
     screen.listen()
@@ -32,10 +32,25 @@ def boundary():
 
 boundary()
 
+
+def player_names():
+    left_user = screen.textinput("Left User", "Name")
+    right_user = screen.textinput("Right User", "Name")
+    name = turtle.Turtle()
+    name.penup()
+    name.hideturtle()
+    name.color("white")
+    name.goto(-300, 290)
+    name.write(left_user,align="left", font=("Courier", 25, "bold"))
+    name.goto(100, 290)
+    name.write(right_user,align="left", font=("Courier", 25, "bold"))
+
+
 is_first_try = 0
 
 
 def btn_click(x, y):
+    player_names()
     global is_first_try
     if -100 <= x <= 100 and -25 <= y <= 25:
         is_first_try += 1
