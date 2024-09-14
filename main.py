@@ -17,7 +17,6 @@ def set_screen():
 set_screen()
 
 
-
 def boundary():
     """It creates boundary of the playground."""
     bud = turtle.Turtle()
