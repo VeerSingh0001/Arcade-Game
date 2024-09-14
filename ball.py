@@ -26,7 +26,7 @@ class Ball(turtle.Turtle):
     def bounce(self, x=1, y=1):
         self.x_move *= x
         self.y_move *= y
-        self.move_speed += 0.001
+        self.move_speed -= 0.001
 
     def reset_position(self):
         y = random.randint(-200, 200)
