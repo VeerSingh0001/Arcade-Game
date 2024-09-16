@@ -32,8 +32,12 @@ def boundary():
 
 boundary()
 
+left_user = ""
+right_user = ""
+
 
 def player_names():
+    global left_user, right_user
     left_user = screen.textinput("Left User", "Name")
     right_user = screen.textinput("Right User", "Name")
     name = turtle.Turtle()
@@ -46,29 +50,10 @@ def player_names():
     name.write(right_user, align="left", font=("Courier", 25, "bold"))
 
 
-is_first_try = 0
-
-
-def btn_click(x, y):
-    player_names()
-    global is_first_try
-    if -100 <= x <= 100 and -25 <= y <= 25:
-        is_first_try += 1
-        if is_first_try != 1:
-            screen.clear()
-        button.clear()
-        button.hideturtle()
-        win.clear()
-        win.hideturtle()
-        screen.onscreenclick(None)
-        set_screen()
-        boundary()
-        start_game()
-
-
 """Draw button"""
 button = turtle.Turtle()
 button.hideturtle()
+
 """Win Turtle"""
 win = turtle.Turtle()
 win.hideturtle()
@@ -95,6 +80,26 @@ def start_btn_text(text, x, y):
     screen.onscreenclick(btn_click)
 
 
+is_first_try = 0
+
+
+def btn_click(x, y):
+    global is_first_try
+    if -100 <= x <= 100 and -25 <= y <= 25:
+        is_first_try += 1
+        if is_first_try != 1:
+            screen.clear()
+        player_names()
+        button.clear()
+        button.hideturtle()
+        win.clear()
+        win.hideturtle()
+        screen.onscreenclick(None)
+        set_screen()
+        boundary()
+        start_game()
+
+
 start_btn(100, 30)
 start_btn_text("Start", 48, 18)
 screen.update()
@@ -103,7 +108,7 @@ screen.update()
 def start_game():
     import ball
     import scoreboard
-
+    global left_user, right_user
     ball = ball.Ball()
     scoreboard = scoreboard.Scoreboard()
 
@@ -159,7 +164,7 @@ def start_game():
             scoreboard.r_score += 1
             scoreboard.update_score()
         # Check Winner
-        if scoreboard.l_score == 10 or scoreboard.r_score == 10:
+        if scoreboard.l_score == 1 or scoreboard.r_score == 1:
             screen.onkey(None, "Up")
             screen.onkey(None, "Down")
             screen.onkey(None, "w")
@@ -170,11 +175,13 @@ def start_game():
             scoreboard.reset()
             win.color("#FDDE55")
             win.penup()
-            win.goto(-180, 40)
+            win.goto(-140, 40)
             if scoreboard.l_score > scoreboard.r_score:
-                win.write("🎉Left Player Won🎉", font=("Courier", 24, "bold"))
+                win.write(f"🎉{left_user} Won🎉", font=("Courier", 24, "bold"), align="left")
             else:
-                win.write("🎉Right Player Won🎉", font=("Courier", 24, "bold"))
+                win.write(f"🎉{right_user} Won🎉", font=("Courier", 24, "bold"), align="left")
+            left_user = ""
+            right_user = ""
             game_is_on = False
             start_btn(120, 30)
             start_btn_text("Play Again!", 97, 18)
