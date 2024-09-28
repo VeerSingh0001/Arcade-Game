@@ -9,7 +9,7 @@ screen = turtle.Screen()
 def set_screen():
     screen.setup(height=730, width=820)
     screen.bgcolor("#1A3636")
-    screen.title("The classic legend Pong Game")
+    screen.title("The Arcade Game")
     screen.listen()
     screen.tracer(0)
 
