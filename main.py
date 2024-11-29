@@ -1,9 +1,12 @@
 import time
 import turtle
-
 import paddles
 
 screen = turtle.Screen()
+ball = ""
+scoreboard = ""
+l_paddles = ""
+r_paddles = ""
 
 
 def set_screen():
@@ -106,10 +109,49 @@ start_btn(100, 30)
 start_btn_text("Start", 48, 18)
 screen.update()
 
+# Timer Turtle
+timer = turtle.Turtle()
+timer.hideturtle()
+timer.color("yellow")
+timer.penup()
+timer.goto(-40, 320)
+
+# Flag to stop the timer
+game_over = False
+
+
+def countdown(time_left):
+    if game_over:
+        timer.clear()
+        return
+    minutes = time_left // 60
+    seconds = time_left % 60
+    timer.clear()
+    timer.write(
+        f"Time Left: {minutes:02d}:{seconds:02d}",
+        align="center",
+        font=("Courier", 24, "bold"),
+    )
+    if time_left > 0:
+        screen.ontimer(lambda: countdown(time_left - 1), 1000)
+    else:
+        # Trigger game over logic here when time runs out
+        end_game()
+
+
+def end_game():
+    global game_over, game_is_on
+    game_over = True
+    game_is_on = False
+    timer.clear()
+    result()
+
 
 def start_game():
+    global game_over, game_is_on, ball, scoreboard, l_paddles, r_paddles
     import ball
     import scoreboard
+
     ball = ball.Ball()
     scoreboard = scoreboard.Scoreboard()
 
@@ -121,6 +163,9 @@ def start_game():
     screen.onkey(l_paddles.down, "s")
 
     game_is_on = True
+    game_over = False
+
+    countdown(300)  # Start the 5-minute countdown
 
     while game_is_on:
         time.sleep(ball.move_speed)
@@ -149,7 +194,12 @@ def start_game():
             ball.bounce(y=-1)
 
         # Detect collision with Paddles
-        if ball.xcor() > 350 and ball.distance(r_paddles) < 50 or ball.xcor() < -350 and ball.distance(l_paddles) < 50:
+        if (
+            ball.xcor() > 350
+            and ball.distance(r_paddles) < 50
+            or ball.xcor() < -350
+            and ball.distance(l_paddles) < 50
+        ):
             ball.bounce(x=-1)
 
         # Detect Right paddle misses of ball
@@ -163,28 +213,34 @@ def start_game():
             ball.reset_position()
             scoreboard.r_score += 1
             scoreboard.update_score()
+
         # Check Winner
         if scoreboard.l_score == 10 or scoreboard.r_score == 10:
-            screen.onkey(None, "Up")
-            screen.onkey(None, "Down")
-            screen.onkey(None, "w")
-            screen.onkey(None, "s")
-            ball.reset()
-            l_paddles.reset()
-            r_paddles.reset()
-            scoreboard.reset()
-            win.color("#FDDE55")
-            win.penup()
-            win.goto(-140, 40)
+            result()
+            end_game()  # Call end_game to stop and hide the timer
 
-            if scoreboard.l_score > scoreboard.r_score:
-                win.write(f"🎉{left_user} Won🎉", font=("Courier", 24, "bold"), align="left")
-            else:
-                win.write(f"🎉{right_user} Won🎉", font=("Courier", 24, "bold"), align="left")
 
-            game_is_on = False
-            start_btn(120, 30)
-            start_btn_text("Play Again!", 97, 18)
+def result():
+    screen.onkey(None, "Up")
+    screen.onkey(None, "Down")
+    screen.onkey(None, "w")
+    screen.onkey(None, "s")
+    ball.reset()
+    l_paddles.reset()
+    r_paddles.reset()
+    scoreboard.reset()
+    win.color("#FDDE55")
+    win.penup()
+    win.goto(-140, 40)
+
+    if scoreboard.l_score > scoreboard.r_score:
+        win.write(f"🎉{left_user} Won🎉", font=("Courier", 24, "bold"), align="left")
+    else:
+        win.write(f"🎉{right_user} Won🎉", font=("Courier", 24, "bold"), align="left")
+
+    game_is_on = False
+    start_btn(120, 30)
+    start_btn_text("Play Again!", 97, 18)
 
 
 screen.mainloop()
